@@ -1,0 +1,586 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>OptiSpend — Student Budget Optimizer</title>
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+
+  <!-- Stylesheet -->
+  <link rel="stylesheet" href="optispend.css"/>
+</head>
+<body>
+
+  <!-- ── ANIMATED BACKGROUND ── -->
+  <div class="bg-canvas"></div>
+  <div class="bg-grid"></div>
+  <div class="orb orb1"></div>
+  <div class="orb orb2"></div>
+  <div class="orb orb3"></div>
+
+  <!-- ── NAVIGATION ── -->
+  <nav>
+    <div class="nav-brand">
+      <div class="dot"></div>
+      OptiSpend
+    </div>
+    <ul class="nav-links">
+      <li><a href="#objectives">Objectives</a></li>
+      <li><a href="#tool">LP Tool</a></li>
+      <li><a href="#cost">Cost Model</a></li>
+      <li><a href="#program">Program</a></li>
+    </ul>
+  </nav>
+
+  <main>
+
+    <!-- ══════════════════════════════════════
+         HERO
+    ══════════════════════════════════════ -->
+    <section id="hero">
+      <div class="container">
+        <div class="hero-inner">
+
+          <!-- Left: Text -->
+          <div class="hero-text">
+            <div class="hero-tag">
+              <div class="pulse"></div>
+              College Budget Awareness Seminar
+            </div>
+            <h1 class="hero-title">
+              Optimize Your <span class="highlight">Student Budget</span> with Linear Programming
+            </h1>
+            <p class="hero-sub">
+              Where financial literacy meets mathematical precision. Use our Simplex-powered
+              tool to distribute your weekly allowance optimally — ensuring every peso works
+              harder for you.
+            </p>
+            <div class="hero-cta">
+              <a href="#tool" class="btn btn-primary">🧮 Launch LP Tool</a>
+              <a href="#objectives" class="btn btn-outline">Learn More</a>
+            </div>
+          </div>
+
+          <!-- Right: Stat Cards -->
+          <div class="hero-visual">
+            <div class="stat-cards">
+              <div class="stat-card">
+                <div class="num">5</div>
+                <div class="label">Budget Categories</div>
+              </div>
+              <div class="stat-card">
+                <div class="num">LP</div>
+                <div class="label">Simplex Algorithm</div>
+              </div>
+              <div class="stat-card">
+                <div class="num">₱</div>
+                <div class="label">Peso-Optimized</div>
+              </div>
+              <div class="stat-card">
+                <div class="num">6h</div>
+                <div class="label">Seminar Duration</div>
+              </div>
+              <div class="stat-card wide">
+                <div class="num" style="font-size:1.4rem;">Quantitative Methods</div>
+                <div class="label">Solving real-world student finance problems</div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ══════════════════════════════════════
+         OBJECTIVES
+    ══════════════════════════════════════ -->
+    <section id="objectives">
+      <div class="container">
+        <div class="reveal">
+          <div class="section-label">About This Seminar</div>
+          <h2 class="section-title">Built to Promote<br/>Financial Discipline</h2>
+          <p class="section-sub">
+            This initiative combines academic rigor with practical tools to help Filipino students
+            manage their resources through mathematical optimization.
+          </p>
+        </div>
+
+        <div class="obj-grid">
+          <div class="obj-card reveal">
+            <div class="obj-icon">📊</div>
+            <h3>Analyze Spending Behavior</h3>
+            <p>Identify patterns in how students allocate their weekly allowance across essential and non-essential categories.</p>
+          </div>
+          <div class="obj-card reveal">
+            <div class="obj-icon">🎯</div>
+            <h3>Optimize Allocation</h3>
+            <p>Apply Linear Programming to find the mathematically optimal distribution that satisfies all minimum constraints.</p>
+          </div>
+          <div class="obj-card reveal">
+            <div class="obj-icon">🧠</div>
+            <h3>Promote Financial Literacy</h3>
+            <p>Equip students with both conceptual understanding and actionable budgeting strategies for real-world application.</p>
+          </div>
+          <div class="obj-card reveal">
+            <div class="obj-icon">⚖️</div>
+            <h3>Balance Needs vs Wants</h3>
+            <p>Distinguish between essential expenses and discretionary spending to prevent financial shortfalls mid-semester.</p>
+          </div>
+          <div class="obj-card reveal">
+            <div class="obj-icon">🔢</div>
+            <h3>Apply Quantitative Methods</h3>
+            <p>Demonstrate how Simplex algorithm-based LP solutions can be applied to everyday personal finance problems.</p>
+          </div>
+          <div class="obj-card reveal">
+            <div class="obj-icon">🌱</div>
+            <h3>Build Saving Habits</h3>
+            <p>Encourage consistent saving by treating savings as an objective function to be maximized within the LP framework.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ══════════════════════════════════════
+         LP OPTIMIZATION FLOW
+    ══════════════════════════════════════ -->
+    <section id="flow">
+      <div class="container">
+        <div class="reveal">
+          <div class="section-label">System Architecture</div>
+          <h2 class="section-title">LP Optimization Flow</h2>
+          <p class="section-sub">The tool follows a rigorous decision process from input to optimized output.</p>
+        </div>
+
+        <div class="flow-chart reveal">
+          <div class="flow-node primary">▶ START</div>
+          <div class="flow-arrow"></div>
+          <div class="flow-node">Input Weekly Allowance</div>
+          <div class="flow-arrow"></div>
+          <div class="flow-node">
+            Define Objective Function<br/>
+            <small style="opacity:0.6;font-size:0.72rem;">Maximize Savings = Allowance − Σ Expenses</small>
+          </div>
+          <div class="flow-arrow"></div>
+          <div class="flow-node">Set Minimum Constraints per Category</div>
+          <div class="flow-arrow"></div>
+          <div class="flow-node decision">⬟ Is Solution Feasible?</div>
+          <div class="flow-arrow" style="opacity:0"></div>
+          <div class="flow-branch">
+            <div class="flow-branch-item">
+              <div class="flow-branch-label">YES</div>
+              <div class="flow-arrow"></div>
+              <div class="flow-node success-node">Run Simplex Solver</div>
+              <div class="flow-arrow"></div>
+              <div class="flow-node success-node">✓ Display Optimal Budget</div>
+            </div>
+            <div class="flow-branch-item">
+              <div class="flow-branch-label">NO</div>
+              <div class="flow-arrow"></div>
+              <div class="flow-node error-node">✕ Not Feasible</div>
+              <div class="flow-arrow"></div>
+              <div class="flow-node error-node">Adjust Inputs ↺</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ══════════════════════════════════════
+         LP TOOL
+    ══════════════════════════════════════ -->
+    <section id="tool">
+      <div class="container">
+        <div class="reveal">
+          <div class="section-label">Interactive Tool</div>
+          <h2 class="section-title">Linear Programming<br/>Budget Optimizer</h2>
+          <p class="section-sub">
+            Enter your weekly allowance, set your minimum requirements, and let the
+            Simplex algorithm find your optimal budget.
+          </p>
+        </div>
+
+        <div class="tool-wrapper reveal" style="margin-top: 40px;">
+          <div class="tool-header">
+            <h2>🧮 Budget Optimizer</h2>
+            <p>Powered by the Simplex Method — Maximize savings subject to spending constraints</p>
+          </div>
+
+          <div class="tool-body">
+
+            <!-- Step Navigation -->
+            <div class="steps-nav">
+              <button class="step-btn active" onclick="goStep(0)">
+                <span class="snum">01</span>ALLOWANCE
+              </button>
+              <button class="step-btn" onclick="goStep(1)">
+                <span class="snum">02</span>MINIMUMS
+              </button>
+              <button class="step-btn" onclick="goStep(2)">
+                <span class="snum">03</span>SOLVE
+              </button>
+            </div>
+
+            <!-- ─── STEP 1: Allowance ─── -->
+            <div id="step-0">
+              <div class="form-group">
+                <label class="form-label">Total Weekly Allowance (₱)</label>
+                <div class="input-prefix">
+                  <span class="prefix">₱</span>
+                  <input
+                    type="number"
+                    class="form-input"
+                    id="allowance"
+                    placeholder="e.g. 2000"
+                    min="0"
+                    step="50"
+                    oninput="updateAllowanceDisplay()"
+                  />
+                </div>
+              </div>
+              <p style="font-size:0.82rem;color:var(--muted);margin-top:-12px;margin-bottom:20px;">
+                Enter your total budget for the week. The optimizer will distribute this across
+                all 5 categories while maximizing your savings.
+              </p>
+
+              <!-- Quick-select buttons -->
+              <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:12px;margin-top:20px;">
+                <button class="btn btn-outline" style="font-size:0.8rem;padding:10px;" onclick="setAllowance(1000)">₱1,000</button>
+                <button class="btn btn-outline" style="font-size:0.8rem;padding:10px;" onclick="setAllowance(1500)">₱1,500</button>
+                <button class="btn btn-outline" style="font-size:0.8rem;padding:10px;" onclick="setAllowance(2000)">₱2,000</button>
+                <button class="btn btn-outline" style="font-size:0.8rem;padding:10px;" onclick="setAllowance(2500)">₱2,500</button>
+                <button class="btn btn-outline" style="font-size:0.8rem;padding:10px;" onclick="setAllowance(3000)">₱3,000</button>
+              </div>
+
+              <button
+                class="solve-btn"
+                onclick="goStep(1)"
+                style="margin-top:24px;background:linear-gradient(135deg,#002f6c,#0a4a8a);"
+              >
+                Next: Set Minimums →
+              </button>
+            </div>
+
+            <!-- ─── STEP 2: Minimum Constraints ─── -->
+            <div id="step-1" style="display:none;">
+              <div class="allowance-display">
+                <span class="label">Weekly Allowance</span>
+                <span class="value" id="allowance-display-2">₱0</span>
+              </div>
+              <p style="font-size:0.84rem;color:var(--muted);margin-bottom:24px;">
+                Set the <strong style="color:var(--text)">minimum amount</strong> you
+                <em>must</em> spend in each category. The optimizer will always allocate
+                at least this much.
+              </p>
+
+              <div class="cat-grid">
+                <div class="cat-card">
+                  <div class="cat-card-head">
+                    <span class="cat-icon">🍚</span>
+                    <span class="cat-name">Food &amp; Meals</span>
+                  </div>
+                  <div class="input-prefix">
+                    <span class="prefix">₱</span>
+                    <input type="number" class="form-input" id="min-food" placeholder="Min e.g. 500" min="0"/>
+                  </div>
+                  <p class="constraint-note">Daily meals, snacks, drinks on campus</p>
+                </div>
+
+                <div class="cat-card">
+                  <div class="cat-card-head">
+                    <span class="cat-icon">🚌</span>
+                    <span class="cat-name">Transportation</span>
+                  </div>
+                  <div class="input-prefix">
+                    <span class="prefix">₱</span>
+                    <input type="number" class="form-input" id="min-transport" placeholder="Min e.g. 200" min="0"/>
+                  </div>
+                  <p class="constraint-note">Jeepney, bus, tricycle, commute fares</p>
+                </div>
+
+                <div class="cat-card">
+                  <div class="cat-card-head">
+                    <span class="cat-icon">📚</span>
+                    <span class="cat-name">Academic Requirements</span>
+                  </div>
+                  <div class="input-prefix">
+                    <span class="prefix">₱</span>
+                    <input type="number" class="form-input" id="min-academic" placeholder="Min e.g. 150" min="0"/>
+                  </div>
+                  <p class="constraint-note">Printing, photocopies, supplies, books</p>
+                </div>
+
+                <div class="cat-card">
+                  <div class="cat-card-head">
+                    <span class="cat-icon">📱</span>
+                    <span class="cat-name">Mobile / Internet</span>
+                  </div>
+                  <div class="input-prefix">
+                    <span class="prefix">₱</span>
+                    <input type="number" class="form-input" id="min-mobile" placeholder="Min e.g. 100" min="0"/>
+                  </div>
+                  <p class="constraint-note">Load, data, WiFi expenses</p>
+                </div>
+
+                <div class="cat-card" style="grid-column: 1 / -1;">
+                  <div class="cat-card-head">
+                    <span class="cat-icon">🛒</span>
+                    <span class="cat-name">Personal Expenses</span>
+                  </div>
+                  <div class="input-prefix">
+                    <span class="prefix">₱</span>
+                    <input type="number" class="form-input" id="min-personal" placeholder="Min e.g. 100" min="0"/>
+                  </div>
+                  <p class="constraint-note">Toiletries, clothing, social activities, misc.</p>
+                </div>
+              </div>
+
+              <div style="display:flex;gap:12px;margin-top:24px;">
+                <button
+                  class="solve-btn"
+                  onclick="goStep(0)"
+                  style="background:rgba(255,255,255,0.05);border:1px solid var(--glass-border);width:auto;padding:14px 28px;"
+                >
+                  ← Back
+                </button>
+                <button class="solve-btn" onclick="goStep(2)" style="flex:1;">Next: Solve →</button>
+              </div>
+            </div>
+
+            <!-- ─── STEP 3: Solve ─── -->
+            <div id="step-2" style="display:none;">
+              <div class="allowance-display">
+                <span class="label">Total Allowance</span>
+                <span class="value" id="allowance-display-3">₱0</span>
+              </div>
+
+              <div id="solve-summary" style="display:grid;gap:10px;margin-bottom:24px;"></div>
+
+              <button class="solve-btn" onclick="runSolver()">⚡ Run Simplex Optimizer</button>
+
+              <!-- Result injected by JS -->
+              <div id="result-panel"></div>
+
+              <button
+                class="solve-btn"
+                onclick="goStep(0)"
+                style="margin-top:14px;background:rgba(255,255,255,0.05);border:1px solid var(--glass-border);"
+              >
+                ← Start Over
+              </button>
+            </div>
+
+          </div><!-- /.tool-body -->
+        </div><!-- /.tool-wrapper -->
+      </div>
+    </section>
+
+    <!-- ══════════════════════════════════════
+         COST MODEL
+    ══════════════════════════════════════ -->
+    <section id="cost">
+      <div class="container">
+        <div class="reveal">
+          <div class="section-label">Seminar Economics</div>
+          <h2 class="section-title">Event Cost Model</h2>
+          <p class="section-sub">
+            For full transparency, here is the linear cost function governing the seminar's
+            operational budget.
+          </p>
+        </div>
+
+        <div class="cost-wrapper reveal">
+
+          <!-- Formula Card -->
+          <div class="formula-card">
+            <div class="section-label" style="margin-bottom:8px;">Objective Function</div>
+            <div class="formula-display">C(x) = ₱31,000 + ₱150x</div>
+            <p class="formula-note">
+              Where <strong style="color:var(--text)">C</strong> is the total seminar cost
+              and <strong style="color:var(--text)">x</strong> is the number of attendees.<br/><br/>
+              <strong style="color:var(--accent)">₱31,000</strong> = Fixed costs (venue, equipment, organizers, materials)<br/>
+              <strong style="color:var(--accent)">₱150</strong> = Variable cost per participant (kit, snacks, handouts)
+            </p>
+          </div>
+
+          <!-- Interactive Calculator -->
+          <div class="cost-calc">
+            <h3>📐 Attendee Cost Calculator</h3>
+            <div class="form-group">
+              <label class="form-label">Number of Attendees (x)</label>
+              <input
+                type="number"
+                class="form-input"
+                id="attendees"
+                placeholder="e.g. 80"
+                min="1"
+                max="500"
+                oninput="calcCost()"
+              />
+            </div>
+            <div class="cost-result" id="cost-result" style="display:none;">
+              <div class="big" id="total-cost">₱0</div>
+              <div class="note">Total Seminar Cost</div>
+            </div>
+            <div class="breakdown" id="cost-breakdown" style="display:none;">
+              <div class="breakdown-row">
+                <span>Fixed Costs</span>
+                <span class="bval">₱31,000</span>
+              </div>
+              <div class="breakdown-row">
+                <span>Variable Costs (<span id="var-formula">0 × ₱150</span>)</span>
+                <span class="bval" id="var-total">₱0</span>
+              </div>
+              <div class="breakdown-row" style="border:1px solid rgba(74,158,255,0.2);background:rgba(74,158,255,0.07);">
+                <span style="font-weight:600;">Total</span>
+                <span class="bval" id="breakdown-total" style="color:var(--accent2);">₱0</span>
+              </div>
+              <div class="breakdown-row" style="background:none;border:none;">
+                <span style="color:var(--muted);">Cost per Attendee</span>
+                <span class="bval" id="per-attendee" style="color:var(--muted);">—</span>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ══════════════════════════════════════
+         SEMINAR PROGRAM
+    ══════════════════════════════════════ -->
+    <section id="program">
+      <div class="container">
+        <div class="reveal">
+          <div class="section-label">Event Schedule</div>
+          <h2 class="section-title">Seminar Program</h2>
+          <p class="section-sub">College Budget Awareness Seminar — 8:00 AM to 2:00 PM</p>
+        </div>
+
+        <div class="program-table-wrapper reveal">
+          <table>
+            <thead>
+              <tr>
+                <th>Time</th>
+                <th>Activity</th>
+                <th>Type</th>
+                <th>Duration</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="time-cell">8:00 – 8:30 AM</td>
+                <td class="activity-cell">
+                  Registration &amp; Arrival
+                  <div class="activity-sub">Sign-in, distribute kits and name tags</div>
+                </td>
+                <td><span class="tag tag-main">Setup</span></td>
+                <td>30 min</td>
+              </tr>
+              <tr>
+                <td class="time-cell">8:30 – 9:00 AM</td>
+                <td class="activity-cell">
+                  Opening Program
+                  <div class="activity-sub">Welcome remarks, objectives, and icebreaker activity</div>
+                </td>
+                <td><span class="tag tag-main">Opening</span></td>
+                <td>30 min</td>
+              </tr>
+              <tr>
+                <td class="time-cell">9:00 – 9:45 AM</td>
+                <td class="activity-cell">
+                  Seminar Part 1: Financial Literacy for Students
+                  <div class="activity-sub">Budgeting basics, needs vs. wants, common student mistakes</div>
+                </td>
+                <td><span class="tag tag-main">Lecture</span></td>
+                <td>45 min</td>
+              </tr>
+              <tr>
+                <td class="time-cell">9:45 – 10:30 AM</td>
+                <td class="activity-cell">
+                  Seminar Part 2: Introduction to Linear Programming
+                  <div class="activity-sub">Objective functions, constraints, and the Simplex method explained</div>
+                </td>
+                <td><span class="tag tag-main">Lecture</span></td>
+                <td>45 min</td>
+              </tr>
+              <tr>
+                <td class="time-cell">10:30 – 10:45 AM</td>
+                <td class="activity-cell">
+                  Short Break
+                  <div class="activity-sub">Snack time &amp; networking</div>
+                </td>
+                <td><span class="tag tag-break">Break</span></td>
+                <td>15 min</td>
+              </tr>
+              <tr>
+                <td class="time-cell">10:45 – 11:30 AM</td>
+                <td class="activity-cell">
+                  Workshop: Live OptiSpend Tool Demo
+                  <div class="activity-sub">Participants input their own budget — real-time Simplex optimization</div>
+                </td>
+                <td><span class="tag tag-activity">Workshop</span></td>
+                <td>45 min</td>
+              </tr>
+              <tr>
+                <td class="time-cell">11:30 AM – 12:15 PM</td>
+                <td class="activity-cell">
+                  Group Activity: Budget Simulation Game
+                  <div class="activity-sub">Teams solve LP budgeting scenarios and compare solutions</div>
+                </td>
+                <td><span class="tag tag-activity">Activity</span></td>
+                <td>45 min</td>
+              </tr>
+              <tr>
+                <td class="time-cell">12:15 – 1:00 PM</td>
+                <td class="activity-cell">
+                  Lunch Break
+                  <div class="activity-sub">Catered meal, free interaction</div>
+                </td>
+                <td><span class="tag tag-break">Lunch</span></td>
+                <td>45 min</td>
+              </tr>
+              <tr>
+                <td class="time-cell">1:00 – 1:30 PM</td>
+                <td class="activity-cell">
+                  Panel Discussion: Student Financial Challenges
+                  <div class="activity-sub">Open Q&amp;A with student representatives and a financial coach</div>
+                </td>
+                <td><span class="tag tag-activity">Discussion</span></td>
+                <td>30 min</td>
+              </tr>
+              <tr>
+                <td class="time-cell">1:30 – 2:00 PM</td>
+                <td class="activity-cell">
+                  Closing Ceremony &amp; Certificates
+                  <div class="activity-sub">Evaluation forms, certificate distribution, closing remarks</div>
+                </td>
+                <td><span class="tag tag-wrap">Closing</span></td>
+                <td>30 min</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer>
+    <p>
+      <strong>OptiSpend</strong> — College Budget Awareness Seminar &nbsp;|&nbsp;
+      Powered by Linear Programming &amp; the Simplex Method
+    </p>
+    <p style="margin-top:8px;font-size:0.75rem;">
+      Quantitative Methods Project &nbsp;·&nbsp; Adamson University Blue #002147
+    </p>
+  </footer>
+
+  <!-- JavaScript -->
+  <script src="optispend.js"></script>
+
+</body>
+</html>
