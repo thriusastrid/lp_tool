@@ -31,11 +31,20 @@ function setAllowance(val) {
 
 // ── CATEGORY DEFINITIONS ──
 const cats = [
-  { id: 'food', label: 'Food & Meals', icon: '🍚', field: 'min-food', weight: 0.4 },
-  { id: 'transport', label: 'Transportation', icon: '🚌', field: 'min-transport', weight: 0.15 },
-  { id: 'academic', label: 'Academic Requirements', icon: '📚', field: 'min-academic',weight: 0.15 },
-  { id: 'mobile', label: 'Mobile / Internet', icon: '📱', field: 'min-mobile', weight: 0.10 },
-  { id: 'personal', label: 'Personal Expenses', icon: '🛒', field: 'min-personal', weight: 0.20 },
+  { id: 'food', label: 'Food & Meals', icon: '🍚', 
+    min_field: 'min-food', max_field: 'max-food', weight_field: 'weight-food'},
+
+  { id: 'transport', label: 'Transportation', icon: '🚌', 
+    min_field: 'min-transport', max_field: 'max-transport', weight_field: 'weight-transport'},
+
+  { id: 'academic', label: 'Academic Requirements', icon: '📚', 
+    min_field: 'min-academic', max_field: 'max-academic', weight_field: 'weight-academic'},
+
+  { id: 'mobile', label: 'Mobile / Internet', icon: '📱', 
+    min_field: 'min-mobile', max_field: 'max-mobile', weight_field: 'weight-mobile'},
+
+  { id: 'personal', label: 'Personal Expenses', icon: '🛒', 
+    min_field: 'min-personal', max_field: 'max-personal', weight_field: 'weight-personal'},
 ];
 
 // ── SOLVE SUMMARY (Step 3 Preview) ──
@@ -44,11 +53,13 @@ function prepSolveSummary() {
   let totalMin = 0;
 
   const rows = cats.map(c => {
-    const min = parseFloat(document.getElementById(c.field).value) || 0;
+    const min = parseFloat(document.getElementById(c.min_field).value) || 0;
+    const max = parseFloat(document.getElementById(c.max_field).value) || Number.MAX_VALUE;
+    const weight = parseFloat(document.getElementById(c.weight_field).value) || 1;
     totalMin += min;
     return `<div class="breakdown-row">
       <span>${c.icon} ${c.label}</span>
-      <span class="bval">Min ₱${min.toLocaleString()}</span>
+      <span class="bval">Weight ${weight} | Min ₱${min.toLocaleString()} | ${max == Number.MAX_VALUE ? "No maximum" : (`Max ₱${max.toLocaleString()}`)}</span>
     </div>`;
   }).join('');
 
@@ -87,51 +98,11 @@ function prepSolveSummary() {
 //
 function runSolver() {
   const allowance = parseFloat(document.getElementById('allowance').value) || 0;
-  const mins = cats.map(c => parseFloat(document.getElementById(c.field).value) || 0);
+  const mins = cats.map(c => parseFloat(document.getElementById(c.min_field).value) || 0);
   const totalMin = mins.reduce((a, b) => a + b, 0);
-
-  const model = {
-    optimize: {
-      //priority: "max",
-      budget: "min",
-    },
-    constraints: {
-      budget_constraint: {
-        max: allowance
-      }
-    },
-    variables: {
-
-    }
-  }
-
-  const additionalConstraints = Object.fromEntries(
-    cats.map((v) => [
-      `${v.id}_constraints`,
-      {
-        min: parseFloat(document.getElementById(v.field).value) || 0
-      }
-    ])
-  )
-
-  model.constraints = {
-    ...model.constraints,
-    ...additionalConstraints
-  }
-
-  model.variables = Object.fromEntries(
-    cats.map((v) => [
-      `${v.id}`,
-      {
-        priority: v.weight,
-        [`${v.id}_constraints`]: 1,
-        budget: 1,
-        budget_constraint: 1
-      }
-    ])
-  )
-
-  const solution = solver.MultiObjective(model)
+  const maxs = cats.map(c => parseFloat(document.getElementById(c.max_field).value) || Number.MAX_VALUE);
+  const weights = cats.map(c => parseFloat(document.getElementById(c.weight_field).value) || 1);
+  const totalWeight = weights.reduce((a, b) => a + b, 0)
 
   const panel = document.getElementById('result-panel');
   panel.className = 'result-panel show';
@@ -150,7 +121,7 @@ function runSolver() {
   }
 
   // ── INFEASIBLE ──
-  if (totalMin > allowance || !solution.midpoint.feasible) {
+  if (totalMin > allowance) {
     const deficit = totalMin - allowance;
     panel.innerHTML = `
       <div class="result-header error">
@@ -175,18 +146,78 @@ function runSolver() {
     return;
   }
 
+  const model = {
+    // optimize: {
+    //   priority: "max",
+    //   //budget: "min",
+    // },
+    constraints: {
+      budget_constraint: {
+        max: allowance
+      }
+    },
+    variables: {
+
+    }
+  }
+
+  const additionalConstraints = Object.fromEntries(
+    cats.map((v, i) => [
+      `${v.id}_constraints`,
+      {
+        max: Math.min(maxs[i], allowance * (weights[i]/totalWeight)),
+        min: mins[i]
+      }
+    ])
+  )
+
+  model.constraints = {
+    ...model.constraints,
+    ...additionalConstraints
+  }
+
+  model.variables = Object.fromEntries(
+    cats.map((v, i) => [
+      `${v.id}`,
+      {
+        priority: weights[i],
+        [`${v.id}_constraints`]: 1,
+        budget: 1,
+        budget_constraint: 1
+      }
+    ])
+  )
+
+  const maxSolution = solver.MultiObjective({...model, optimize: { priority: "max" }})
+  const minSolution = solver.MultiObjective({...model, optimize: { budget: "min" }})
+  console.log(maxSolution)
+  console.log(minSolution)
+
   // ── FEASIBLE — Compute Optimal Allocation ──
-  const remaining = allowance - solution.midpoint.result;  // slack = savings at optimum
+  const remaining = allowance - minSolution.midpoint.result;  // slack = savings at optimum
   const savings = remaining;
 
-  // Proportional weights for recommended flex spending
-  const weights = [0.40, 0.15, 0.15, 0.10, 0.20]; // food, transport, academic, mobile, personal
-  const flexAlloc = weights.map(w => Math.round(remaining * w));
-  // Fix rounding drift on last element
-  const flexTotal = flexAlloc.reduce((a, b) => a + b, 0);
-  flexAlloc[4] += (remaining - flexTotal);
+  const flexAlloc = cats.map((v, i) => maxSolution.midpoint[v.id] - minSolution.midpoint[v.id])
 
-  const allocations = mins.map((m, i) => m + flexAlloc[i]);
+  // reallocate remaining
+  const flexTotal = flexAlloc.reduce((a, b) => a + b, 0);
+  if (flexTotal > 0) {
+    const newWeights = cats.map((v, i) => {
+      if (Math.abs(maxSolution.midpoint[v.id] - maxs[i]) <= 2**-16) {
+        return 0
+      }
+      return weights[i]
+    })
+    const newTotalWeight = newWeights.reduce((a, b) => a + b, 0)
+    const toDistribute = (remaining - flexTotal)
+
+    flexAlloc.forEach((_, i) => {
+      flexAlloc[i] += toDistribute * (newWeights[i]/newTotalWeight)
+    })
+
+  }
+
+  const allocations = cats.map((v, i) => flexAlloc[i] + minSolution.midpoint[v.id])
   const totalAllocated = allocations.reduce((a, b) => a + b, 0);
 
   // Bar gradient colours per category

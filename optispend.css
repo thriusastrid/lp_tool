@@ -332,6 +332,12 @@ nav {
 }
 .input-prefix .form-input { padding-left: 28px; }
 
+.input-container {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
 .range-track { margin-top: 10px; }
 /* Update your range-track input styling */
 .range-track input[type=range] {

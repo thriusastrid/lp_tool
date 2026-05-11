@@ -220,7 +220,7 @@
                 <span class="snum">01</span>ALLOWANCE
               </button>
               <button class="step-btn" onclick="goStep(1)">
-                <span class="snum">02</span>MINIMUMS
+                <span class="snum">02</span>CONSTRAINTS
               </button>
               <button class="step-btn" onclick="goStep(2)">
                 <span class="snum">03</span>SOLVE
@@ -267,16 +267,15 @@
               </button>
             </div>
 
-            <!-- ─── STEP 2: Minimum Constraints ─── -->
+            <!-- ─── STEP 2: Constraints ─── -->
             <div id="step-1" style="display:none;">
               <div class="allowance-display">
                 <span class="label">Weekly Allowance</span>
                 <span class="value" id="allowance-display-2">₱0</span>
               </div>
               <p style="font-size:0.84rem;color:var(--muted);margin-bottom:24px;">
-                Set the <strong style="color:var(--text)">minimum amount</strong> you
-                <em>must</em> spend in each category. The optimizer will always allocate
-                at least this much.
+                Set the constraints of each category. 
+                The optimizer will use these as a basis for optimization.
               </p>
 
               <div class="cat-grid">
@@ -285,9 +284,16 @@
                     <span class="cat-icon">🍚</span>
                     <span class="cat-name">Food &amp; Meals</span>
                   </div>
-                  <div class="input-prefix">
-                    <span class="prefix">₱</span>
-                    <input type="number" class="form-input" id="min-food" placeholder="Min e.g. 500" min="0"/>
+                  <div class="input-container">
+                    <div class="input-prefix">
+                      <span class="prefix">₱</span>
+                      <input type="number" class="form-input" id="min-food" placeholder="Min e.g. 500" min="0"/>
+                    </div>
+                    <div class="input-prefix">
+                      <span class="prefix">₱</span>
+                      <input type="number" class="form-input" id="max-food" placeholder="Max (optional)" min="0"/>
+                    </div>
+                    <input type="number" class="form-input" id="weight-food" placeholder="Weight e.g. 40" min="0"/>
                   </div>
                   <p class="constraint-note">Daily meals, snacks, drinks on campus</p>
                 </div>
@@ -297,9 +303,16 @@
                     <span class="cat-icon">🚌</span>
                     <span class="cat-name">Transportation</span>
                   </div>
-                  <div class="input-prefix">
-                    <span class="prefix">₱</span>
-                    <input type="number" class="form-input" id="min-transport" placeholder="Min e.g. 200" min="0"/>
+                  <div class="input-container">
+                    <div class="input-prefix">
+                      <span class="prefix">₱</span>
+                      <input type="number" class="form-input" id="min-transport" placeholder="Min e.g. 200" min="0"/>
+                    </div>
+                    <div class="input-prefix">
+                      <span class="prefix">₱</span>
+                      <input type="number" class="form-input" id="max-transport" placeholder="Max (optional)" min="0"/>
+                    </div>
+                    <input type="number" class="form-input" id="weight-transport" placeholder="Weight e.g. 15" min="0"/>
                   </div>
                   <p class="constraint-note">Jeepney, bus, tricycle, commute fares</p>
                 </div>
@@ -309,9 +322,16 @@
                     <span class="cat-icon">📚</span>
                     <span class="cat-name">Academic Requirements</span>
                   </div>
-                  <div class="input-prefix">
-                    <span class="prefix">₱</span>
-                    <input type="number" class="form-input" id="min-academic" placeholder="Min e.g. 150" min="0"/>
+                  <div class="input-container">
+                    <div class="input-prefix">
+                      <span class="prefix">₱</span>
+                      <input type="number" class="form-input" id="min-academic" placeholder="Min e.g. 150" min="0"/>
+                    </div>
+                    <div class="input-prefix">
+                      <span class="prefix">₱</span>
+                      <input type="number" class="form-input" id="max-academic" placeholder="Max (optional)" min="0"/>
+                    </div>
+                    <input type="number" class="form-input" id="weight-academic" placeholder="Weight e.g. 15" min="0"/>
                   </div>
                   <p class="constraint-note">Printing, photocopies, supplies, books</p>
                 </div>
@@ -321,9 +341,16 @@
                     <span class="cat-icon">📱</span>
                     <span class="cat-name">Mobile / Internet</span>
                   </div>
-                  <div class="input-prefix">
-                    <span class="prefix">₱</span>
-                    <input type="number" class="form-input" id="min-mobile" placeholder="Min e.g. 100" min="0"/>
+                  <div class="input-container">
+                    <div class="input-prefix">
+                      <span class="prefix">₱</span>
+                      <input type="number" class="form-input" id="min-mobile" placeholder="Min e.g. 100" min="0"/>
+                    </div>
+                    <div class="input-prefix">
+                      <span class="prefix">₱</span>
+                      <input type="number" class="form-input" id="max-mobile" placeholder="Max (optional)" min="0"/>
+                    </div>
+                    <input type="number" class="form-input" id="weight-mobile" placeholder="Weight e.g. 10" min="0"/>
                   </div>
                   <p class="constraint-note">Load, data, WiFi expenses</p>
                 </div>
@@ -333,9 +360,16 @@
                     <span class="cat-icon">🛒</span>
                     <span class="cat-name">Personal Expenses</span>
                   </div>
-                  <div class="input-prefix">
-                    <span class="prefix">₱</span>
-                    <input type="number" class="form-input" id="min-personal" placeholder="Min e.g. 100" min="0"/>
+                  <div class="input-container">
+                    <div class="input-prefix">
+                      <span class="prefix">₱</span>
+                      <input type="number" class="form-input" id="min-personal" placeholder="Min e.g. 100" min="0"/>
+                    </div>
+                    <div class="input-prefix">
+                      <span class="prefix">₱</span>
+                      <input type="number" class="form-input" id="max-personal" placeholder="Max (optional)" min="0"/>
+                    </div>
+                    <input type="number" class="form-input" id="weight-personal" placeholder="Weight e.g. 20" min="0"/>
                   </div>
                   <p class="constraint-note">Toiletries, clothing, social activities, misc.</p>
                 </div>
