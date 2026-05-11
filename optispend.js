@@ -27,13 +27,15 @@ function setAllowance(val) {
   updateAllowanceDisplay();
 }
 
+//0.40, 0.15, 0.15, 0.10, 0.20
+
 // ── CATEGORY DEFINITIONS ──
 const cats = [
-  { id: 'food',      label: 'Food & Meals',          icon: '🍚', field: 'min-food' },
-  { id: 'transport', label: 'Transportation',         icon: '🚌', field: 'min-transport' },
-  { id: 'academic',  label: 'Academic Requirements',  icon: '📚', field: 'min-academic' },
-  { id: 'mobile',    label: 'Mobile / Internet',      icon: '📱', field: 'min-mobile' },
-  { id: 'personal',  label: 'Personal Expenses',      icon: '🛒', field: 'min-personal' },
+  { id: 'food', label: 'Food & Meals', icon: '🍚', field: 'min-food', weight: 0.4 },
+  { id: 'transport', label: 'Transportation', icon: '🚌', field: 'min-transport', weight: 0.15 },
+  { id: 'academic', label: 'Academic Requirements', icon: '📚', field: 'min-academic',weight: 0.15 },
+  { id: 'mobile', label: 'Mobile / Internet', icon: '📱', field: 'min-mobile', weight: 0.10 },
+  { id: 'personal', label: 'Personal Expenses', icon: '🛒', field: 'min-personal', weight: 0.20 },
 ];
 
 // ── SOLVE SUMMARY (Step 3 Preview) ──
@@ -88,6 +90,49 @@ function runSolver() {
   const mins = cats.map(c => parseFloat(document.getElementById(c.field).value) || 0);
   const totalMin = mins.reduce((a, b) => a + b, 0);
 
+  const model = {
+    optimize: {
+      //priority: "max",
+      budget: "min",
+    },
+    constraints: {
+      budget_constraint: {
+        max: allowance
+      }
+    },
+    variables: {
+
+    }
+  }
+
+  const additionalConstraints = Object.fromEntries(
+    cats.map((v) => [
+      `${v.id}_constraints`,
+      {
+        min: parseFloat(document.getElementById(v.field).value) || 0
+      }
+    ])
+  )
+
+  model.constraints = {
+    ...model.constraints,
+    ...additionalConstraints
+  }
+
+  model.variables = Object.fromEntries(
+    cats.map((v) => [
+      `${v.id}`,
+      {
+        priority: v.weight,
+        [`${v.id}_constraints`]: 1,
+        budget: 1,
+        budget_constraint: 1
+      }
+    ])
+  )
+
+  const solution = solver.MultiObjective(model)
+
   const panel = document.getElementById('result-panel');
   panel.className = 'result-panel show';
 
@@ -105,7 +150,7 @@ function runSolver() {
   }
 
   // ── INFEASIBLE ──
-  if (totalMin > allowance) {
+  if (totalMin > allowance || !solution.midpoint.feasible) {
     const deficit = totalMin - allowance;
     panel.innerHTML = `
       <div class="result-header error">
@@ -131,17 +176,17 @@ function runSolver() {
   }
 
   // ── FEASIBLE — Compute Optimal Allocation ──
-  const remaining = allowance - totalMin;  // slack = savings at optimum
-  const savings   = remaining;
+  const remaining = allowance - solution.midpoint.result;  // slack = savings at optimum
+  const savings = remaining;
 
   // Proportional weights for recommended flex spending
-  const weights  = [0.40, 0.15, 0.15, 0.10, 0.20]; // food, transport, academic, mobile, personal
+  const weights = [0.40, 0.15, 0.15, 0.10, 0.20]; // food, transport, academic, mobile, personal
   const flexAlloc = weights.map(w => Math.round(remaining * w));
   // Fix rounding drift on last element
   const flexTotal = flexAlloc.reduce((a, b) => a + b, 0);
   flexAlloc[4] += (remaining - flexTotal);
 
-  const allocations    = mins.map((m, i) => m + flexAlloc[i]);
+  const allocations = mins.map((m, i) => m + flexAlloc[i]);
   const totalAllocated = allocations.reduce((a, b) => a + b, 0);
 
   // Bar gradient colours per category
@@ -216,21 +261,21 @@ function runSolver() {
 // ── SEMINAR COST MODEL CALCULATOR ──
 // Total Cost C(x) = 31,000 + 150x
 function calcCost() {
-  const x      = parseInt(document.getElementById('attendees').value) || 0;
-  const fixed  = 31000;
+  const x = parseInt(document.getElementById('attendees').value) || 0;
+  const fixed = 31000;
   const variable = 150 * x;
-  const total    = fixed + variable;
+  const total = fixed + variable;
   const perPerson = x > 0 ? (total / x).toFixed(2) : '—';
 
-  document.getElementById('cost-result').style.display    = x > 0 ? 'block' : 'none';
-  document.getElementById('cost-breakdown').style.display = x > 0 ? 'grid'  : 'none';
+  document.getElementById('cost-result').style.display = x > 0 ? 'block' : 'none';
+  document.getElementById('cost-breakdown').style.display = x > 0 ? 'grid' : 'none';
 
   if (x > 0) {
-    document.getElementById('total-cost').textContent      = `₱${total.toLocaleString()}`;
-    document.getElementById('var-formula').textContent     = `${x} × ₱150`;
-    document.getElementById('var-total').textContent       = `₱${variable.toLocaleString()}`;
+    document.getElementById('total-cost').textContent = `₱${total.toLocaleString()}`;
+    document.getElementById('var-formula').textContent = `${x} × ₱150`;
+    document.getElementById('var-total').textContent = `₱${variable.toLocaleString()}`;
     document.getElementById('breakdown-total').textContent = `₱${total.toLocaleString()}`;
-    document.getElementById('per-attendee').textContent    = `₱${parseFloat(perPerson).toLocaleString()}`;
+    document.getElementById('per-attendee').textContent = `₱${parseFloat(perPerson).toLocaleString()}`;
   }
 }
 
